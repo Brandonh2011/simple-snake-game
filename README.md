@@ -11,7 +11,7 @@ This is a simple snake game written by me in Python using the pygame module.
 
 ## Concept
 
-If you have never played snake before, the concept is simple: Eat the fruit to grow in size, but be careful! If you run into yourself or run into the walls, you will lose and haave to start over.
+If you have never played snake before, the concept is simple: Eat the fruit to grow in size, but be careful! If you run into yourself or run into the walls, you will lose and have to start over.
 
 You win when you take up the entire board.
 
