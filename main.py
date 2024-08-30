@@ -3,6 +3,7 @@
 import pygame as pg
 from random import randrange
 
+pg.init()
 WINDOW = 1000
 TILE_SIZE = 50
 RANGE = (TILE_SIZE // 2, WINDOW - TILE_SIZE // 2, TILE_SIZE)
@@ -10,6 +11,7 @@ get_random_position = lambda: [randrange(*RANGE), randrange(*RANGE)]
 snake = pg.rect.Rect([0,0,TILE_SIZE - 2, TILE_SIZE - 2])
 snake.center = get_random_position()
 length = 1
+score = 0
 segments = [snake.copy()]
 snake_dir = (0,0)
 time, time_step = 0,110
@@ -18,6 +20,7 @@ food.center = get_random_position()
 screen = pg.display.set_mode([WINDOW] * 2)
 clock = pg.time.Clock()
 dirs = {pg.K_w: 1, pg.K_s: 1, pg.K_a: 1, pg.K_d: 1}
+font = pg.font.Font("./Roboto-Regular.ttf", 36)
 
 while True:
     for event in pg.event.get():
@@ -43,16 +46,21 @@ while True:
         snake.center, food.center = get_random_position(),get_random_position()
         length,snake_dir = 1,(0,0)
         segments = [snake.copy()]
+        score = 0
     # check food
     if snake.center == food.center:
         food.center = get_random_position()
         length += 1
+        score += 1
     # draw food
     pg.draw.rect(screen, 'red', food)
     # draw snake
     [pg.draw.rect(screen, 'green', segment) for segment in segments]
     # move snake
     time_now = pg.time.get_ticks()
+    # display score
+    score_text = font.render(f'Score: {score}', True, (255, 255, 255))
+    screen.blit(score_text, (10, 10))
     if time_now - time > time_step:
         time = time_now
         snake.move_ip(snake_dir)
